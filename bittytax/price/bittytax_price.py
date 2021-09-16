@@ -3,7 +3,6 @@
 
 import argparse
 import sys
-import codecs
 import platform
 import re
 from decimal import Decimal, InvalidOperation
@@ -13,6 +12,7 @@ from colorama import Fore, Back
 import dateutil.parser
 
 from ..version import __version__
+from ..commons import encoding
 from ..config import config
 from .datasource import DataSourceBase
 from .assetdata import AssetData
@@ -23,13 +23,8 @@ CMD_LATEST = 'latest'
 CMD_HISTORY = 'historic'
 CMD_LIST = 'list'
 
-if sys.stdout.encoding != 'UTF-8':
-    if sys.version_info[:2] >= (3, 7):
-        sys.stdout.reconfigure(encoding='utf-8')
-    elif sys.version_info[:2] >= (3, 1):
-        sys.stdout = codecs.getwriter('utf-8')(sys.stdout.detach())
-    else:
-        sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+encoding.Encoding.init_stderr()
+
 
 def main():
     colorama.init()

@@ -3,7 +3,6 @@
 
 import argparse
 import sys
-import codecs
 import platform
 import glob
 import errno
@@ -13,6 +12,7 @@ from colorama import Fore, Back
 import xlrd
 
 from ..version import __version__
+from ..commons import encoding
 from ..config import config
 from .dataparser import DataParser
 from .datafile import DataFile
@@ -21,13 +21,9 @@ from .output_excel import OutputExcel
 from .exceptions import UnknownCryptoassetError, UnknownUsernameError, DataFilenameError, \
                         DataFormatUnrecognised
 
-if sys.stderr.encoding != 'UTF-8':
-    if sys.version_info[:2] >= (3, 7):
-        sys.stderr.reconfigure(encoding='utf-8')
-    elif sys.version_info[:2] >= (3, 1):
-        sys.stderr = codecs.getwriter('utf-8')(sys.stderr.detach())
-    else:
-        sys.stderr = codecs.getwriter('utf-8')(sys.stderr)
+
+encoding.Encoding.init_stderr()
+
 
 def main():
     colorama.init()
@@ -131,6 +127,7 @@ def main():
             sys.stderr.write(Fore.RESET)
             sys.stderr.flush()
             output.write_csv()
+
 
 def do_read_file(pathname, args):
     try:
