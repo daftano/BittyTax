@@ -7,9 +7,9 @@ from datetime import datetime
 from colorama import Fore, Back, Style
 from tqdm import tqdm
 
-from ..version import __version__
 from ..config import config
 from .pricedata import PriceData
+
 
 class ValueAsset(object):
     def __init__(self, price_tool=False):
