@@ -12,18 +12,18 @@ import colorama
 from colorama import Fore, Back
 import xlrd
 
-from .version import __version__
-from .commons import encoding
-from .config import config
-from .import_records import ImportRecords
-from .export_records import ExportRecords
-from .transactions import TransactionHistory
-from .audit import AuditRecords
-from .price.valueasset import ValueAsset
-from .price.exceptions import DataSourceError
-from .tax import TaxCalculator, CalculateCapitalGains as CCG
-from .report import ReportLog, ReportPdf
-from .exceptions import ImportFailureError
+from bittytax.version import __version__
+from bittytax.commons import encoding
+from bittytax.config import config
+from bittytax.import_records import ImportRecords
+from bittytax.export_records import ExportRecords
+from bittytax.transactions import TransactionHistory
+from bittytax.audit import AuditRecords
+from bittytax.price.valueasset import ValueAsset
+from bittytax.price.exceptions import DataSourceError
+from bittytax.tax import TaxCalculator, CalculateCapitalGains as CCG
+from bittytax.report import ReportLog, ReportPdf
+from bittytax.exceptions import ImportFailureError
 
 encoding.Encoding.init_stderr()
 
@@ -137,6 +137,7 @@ def main():
                   tax.holdings_report,
                   args)
 
+
 def validate_year(value):
     year = int(value)
     if year not in CCG.CG_DATA_INDIVIDUAL:
@@ -147,6 +148,7 @@ def validate_year(value):
             max(CCG.CG_DATA_INDIVIDUAL)))
 
     return year
+
 
 def do_import(filename):
     import_records = ImportRecords()
@@ -172,6 +174,7 @@ def do_import(filename):
 
     return import_records.get_records()
 
+
 def do_tax(transaction_records, tax_rules, skip_integrity_check):
     value_asset = ValueAsset()
     transaction_history = TransactionHistory(transaction_records, value_asset)
@@ -187,6 +190,7 @@ def do_tax(transaction_records, tax_rules, skip_integrity_check):
 
     tax.process_section104(skip_integrity_check)
     return tax, value_asset
+
 
 def do_integrity_check(audit, holdings):
     int_passed = True
@@ -219,8 +223,10 @@ def do_integrity_check(audit, holdings):
         audit.report_failures()
     return int_passed
 
+
 def transfer_mismatches(holdings):
     return bool([asset for asset in holdings if holdings[asset].mismatches])
+
 
 def do_each_tax_year(tax, tax_year, summary, value_asset):
     if tax_year:
@@ -251,7 +257,12 @@ def do_each_tax_year(tax, tax_year, summary, value_asset):
 
     return tax, value_asset
 
+
 def do_export(transaction_records):
     value_asset = ValueAsset()
     TransactionHistory(transaction_records, value_asset)
     ExportRecords(transaction_records).write_csv()
+
+
+if __name__ == "__main__":
+    main()

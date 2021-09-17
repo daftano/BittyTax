@@ -5,8 +5,9 @@ import io
 from setuptools import setup
 
 BITTYTAX_PATH = os.path.expanduser('~/.bittytax')
-VERSION_FILE = 'bittytax/version.py'
+VERSION_FILE = 'src/bittytax/version.py'
 GITHUB_REPO = 'https://github.com/BittyTax/BittyTax'
+
 
 def get_version():
     line = open(VERSION_FILE, 'rt').read()

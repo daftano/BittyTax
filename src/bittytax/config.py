@@ -10,7 +10,6 @@ from colorama import Fore, Back
 import yaml
 import dateutil.tz
 
-from .version import __version__
 
 class Config(object):
     TZ_INFOS = {'BST': dateutil.tz.gettz('Europe/London'),
@@ -145,5 +144,6 @@ class Config(object):
         if start.year == end.year:
             return start.strftime('%Y')
         return '{}/{}'.format(start.strftime('%Y'), end.strftime('%y'))
+
 
 config = Config()

@@ -17,6 +17,7 @@ from .exceptions import TransactionParserError, UnexpectedTransactionTypeError, 
                         TimestampParserError, DataValueError, MissingDataError, \
                         UnexpectedDataError
 
+
 class ImportRecords(object):
     def __init__(self):
         self.t_rows = []
@@ -142,6 +143,7 @@ class ImportRecords(object):
                 print("%simport: %s" % (Fore.YELLOW, t_row))
 
         return transaction_records
+
 
 class TransactionRow(object):
     HEADER = ['Type',

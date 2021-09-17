@@ -6,6 +6,7 @@ import requests
 
 from bittytax.conv.parsers.kraken import split_trading_pair
 
+
 def get_alt_assets():
     response = requests.get("https://api.kraken.com/0/public/Assets")
 
